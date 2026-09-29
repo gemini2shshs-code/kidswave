@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KidsWave - Magical Toys for Kids in Bangladesh</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        },
+                        sunshine: {
+                            400: '#facc15',
+                            500: '#eab308'
+                        },
+                        bubblegum: {
+                            500: '#ec4899'
+                        },
+                        bkash: {
+                            DEFAULT: '#e2136e'
+                        },
+                        nagad: {
+                            DEFAULT: '#f36f21'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter & Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .heading-font {
+            font-family: 'Poppins', sans-serif;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-full">
+
+    <div class="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium shadow-inner">
+        🎉 Free Home Delivery Across Bangladesh on Orders Over ৳1,500! Use Code: <span class="bg-white/20 px-2 py-0.5 rounded font-bold">WAVEKIDS</span> 🚀
+    </div>
+
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 gap-2 sm:gap-4">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-2 cursor-pointer" onclick="resetFilters()">
+                    <div class="bg-gradient-to-tr from-cyan-500 to-blue-500 text-white p-2.5 rounded-2xl shadow-lg flex items-center justify-center transform hover:rotate-6 transition">
+                        <i data-lucide="waves" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <span class="heading-font text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">KidsWave</span>
+                        <span class="block text-[10px] uppercase tracking-widest font-bold text-amber-500 -mt-1">Toys & Fun Store</span>
+                    </div>
+                </div>
+
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden md:flex flex-1 max-w-2xl mx-4">
+                    <div class="flex w-full rounded-full border-2 border-cyan-300 focus-within:border-cyan-500 overflow-hidden shadow-sm bg-gray-50">
+                        <select id="category-filter-select" class="bg-gray-100 text-sm px-4 py-2 border-r border-cyan-200 text-gray-700 outline-none font-medium cursor-pointer">
+                            <option value="All">All Categories</option>
+                            <option value="Action Figures">Action Figures</option>
+                            <option value="Educational">Educational</option>
+                            <option value="Board Games">Board Games</option>
+                            <option value="Dolls">Dolls & Plush</option>
+                            <option value="Outdoor">Outdoor</option>
+                            <option value="Baby Toys">Baby Toys</option>
+                        </select>
+                        <input type="text" id="search-input" placeholder="Search for fun toys, board games, dolls..." class="w-full px-4 py-2 text-sm bg-transparent outline-none text-gray-700">
+                        <button onclick="handleSearch()" class="bg-cyan-500 hover:bg-cyan-600 text-white px-6 flex items-center justify-center transition">
+                            <i data-lucide="search" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Action Icons -->
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <button onclick="openWishlistModal()" class="relative p-2.5 text-gray-600 hover:text-cyan-600 hover:bg-cyan-50 rounded-full transition flex items-center gap-1">
+                        <i data-lucide="heart" class="w-6 h-6"></i>
+                        <span id="wishlist-badge" class="absolute -top-1 -right-1 bg-cyan-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow">0</span>
+                    </button>
+
+                    <button onclick="openCartDrawer()" class="relative bg-cyan-50 hover:bg-cyan-100 text-cyan-700 border border-cyan-200 px-4 py-2 rounded-full font-semibold flex items-center gap-2 transition shadow-sm">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                        <span class="hidden sm:inline">Cart</span>
+                        <span id="cart-badge" class="bg-cyan-600 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <div class="md:hidden pb-3">
+                <div class="flex w-full rounded-full border-2 border-cyan-300 overflow-hidden bg-gray-50">
+                    <input type="text" id="mobile-search-input" placeholder="Search toys..." class="w-full px-4 py-2 text-sm bg-transparent outline-none text-gray-700">
+                    <button onclick="handleMobileSearch()" class="bg-cyan-500 text-white px-4 flex items-center justify-center">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="bg-white border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-3 overflow-x-auto py-3 no-scrollbar text-sm font-semibold">
+                <button onclick="filterByCategory('All')" class="category-btn whitespace-nowrap px-4 py-2 rounded-full bg-cyan-500 text-white shadow-md transition flex items-center gap-2">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i> All Toys
+                </button>
+                <button onclick="filterByCategory('Action Figures')" class="category-btn whitespace-nowrap px-4 py-2 rounded-full bg-gray-100 hover:bg-cyan-100 text-gray-700 transition flex items-center gap-2">
+                    <i data-lucide="shield" class="w-4 h-4 text-blue-500"></i> Action Figures
+                </button>
+                <button onclick="filterByCategory('Educational')" class="category-btn whitespace-nowrap px-4 py-2 rounded-full bg-gray-100 hover:bg-cyan-100 text-gray-700 transition flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-4 h-4 text-emerald-500"></i> Educational
+                </button>
+                <button onclick="filterByCategory('Board Games')" class="category-btn whitespace-nowrap px-4 py-2 rounded-full bg-gray-100 hover:bg-cyan-100 text-gray-700 transition flex items-center gap-2">
+                    <i data-lucide="dice-5" class="w-4 h-4 text-amber-500"></i> Board Games
+                </button>
+                <button onclick="filterByCategory('Dolls')" class="category-btn whitespace-nowrap px-4 py-2 rounded-full bg-gray-100 hover:bg-cyan-100 text-gray-700 transition flex items-center gap-2">
+                    <i data-lucide="smile" class="w-4 h-4 text-pink-500"></i> Dolls & Plush
+                </button>
+                <button onclick="filterByCategory('Outdoor')" class="category-btn whitespace-nowrap px-4 py-2 rounded-full bg-gray-100 hover:bg-cyan-100 text-gray-700 transition flex items-center gap-2">
+                    <i data-lucide="sun" class="w-4 h-4 text-orange-500"></i> Outdoor
+                </button>
+                <button onclick="filterByCategory('Baby Toys')" class="category-btn whitespace-nowrap px-4 py-2 rounded-full bg-gray-100 hover:bg-cyan-100 text-gray-700 transition flex items-center gap-2">
+                    <i data-lucide="baby" class="w-4 h-4 text-purple-500"></i> Baby Toys
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400 text-white p-8 sm:p-12 shadow-xl flex flex-col md:flex-row items-center justify-between">
+            <div class="relative z-10 max-w-xl space-y-4 text-center md:text-left">
+                <span class="bg-amber-400 text-gray-900 font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider inline-block">🇧🇩 Fast Delivery Across Bangladesh</span>
+                <h1 class="heading-font text-3xl sm:text-5xl font-extrabold leading-tight">Wave of Fun & Magical Toys for Kids!</h1>
+                <p class="text-white/90 text-sm sm:text-base">Explore safe, educational, and exciting toys delivered right to your doorstep in Dhaka, Chattogram, Sylhet, Khulna & all over Bangladesh.</p>
+                <div class="pt-2 flex flex-wrap gap-4 justify-center md:justify-start">
+                    <button onclick="filterByCategory('Educational')" class="bg-amber-400 hover:bg-amber-500 text-gray-900 font-bold px-6 py-3 rounded-full shadow-lg transition transform hover:-translate-y-0.5">
+                        Shop Educational 📚
+                    </button>
+                    <button onclick="filterByCategory('Action Figures')" class="bg-white/20 hover:bg-white/30 text-white font-bold px-6 py-3 rounded-full backdrop-blur transition">
+                        Action Figures 🦸‍♂️
+                    </button>
+                </div>
+            </div>
+            <div class="mt-8 md:mt-0 relative z-10">
+                <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=500&q=80" alt="Toys collection" class="rounded-2xl shadow-2xl border-4 border-white/25 w-72 sm:w-80 object-cover transform md:rotate-3 hover:rotate-0 transition duration-300">
+            </div>
+            <div class="absolute -top-12 -left-12 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-12 -right-12 w-64 h-64 bg-amber-400/20 rounded-full blur-3xl"></div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10 flex-1 w-full">
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Sidebar Filters -->
+            <aside class="w-full lg:w-72 bg-white p-6 rounded-3xl shadow-sm border border-gray-200 h-fit space-y-6">
+                <div class="flex items-center justify-between border-b pb-4">
+                    <h3 class="heading-font text-lg font-bold text-gray-900 flex items-center gap-2">
+                        <i data-lucide="filter" class="w-5 h-5 text-cyan-600"></i> Filters
+                    </h3>
+                    <button onclick="resetFilters()" class="text-xs text-cyan-600 hover:underline font-semibold">Reset All</button>
+                </div>
+
+                <!-- Age Group Filter -->
+                <div class="space-y-3">
+                    <h4 class="font-bold text-sm text-gray-800">Age Group</h4>
+                    <div class="space-y-2 text-sm">
+                        <label class="flex items-center gap-2 cursor-pointer hover:text-cyan-600">
+                            <input type="checkbox" name="age" value="0-2 yrs" onchange="applyFilters()" class="rounded text-cyan-600 focus:ring-cyan-500 w-4 h-4"> 0 - 2 Years (Toddlers)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer hover:text-cyan-600">
+                            <input type="checkbox" name="age" value="3-5 yrs" onchange="applyFilters()" class="rounded text-cyan-600 focus:ring-cyan-500 w-4 h-4"> 3 - 5 Years (Preschool)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer hover:text-cyan-600">
+                            <input type="checkbox" name="age" value="6-8 yrs" onchange="applyFilters()" class="rounded text-cyan-600 focus:ring-cyan-500 w-4 h-4"> 6 - 8 Years (Kids)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer hover:text-cyan-600">
+                            <input type="checkbox" name="age" value="9+ yrs" onchange="applyFilters()" class="rounded text-cyan-600 focus:ring-cyan-500 w-4 h-4"> 9+ Years (Teens & Tweens)
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="space-y-3 border-t pt-4">
+                    <h4 class="font-bold text-sm text-gray-800">Max Price: <span id="price-output" class="text-cyan-700 font-bold">৳5,000</span></h4>
+                    <input type="range" id="price-range" min="500" max="10000" value="10000" step="200" oninput="updatePriceLabel(); applyFilters();" class="w-full accent-cyan-600 cursor-pointer">
+                    <div class="flex justify-between text-xs text-gray-500">
+                        <span>৳500</span>
+                        <span>৳5,000</span>
+                        <span>৳10,000</span>
+                    </div>
+                </div>
+
+                <!-- Rating Filter -->
+                <div class="space-y-3 border-t pt-4">
+                    <h4 class="font-bold text-sm text-gray-800">Minimum Rating</h4>
+                    <div class="space-y-2 text-sm">
+                        <label class="flex items-center gap-2 cursor-pointer hover:text-cyan-600">
+                            <input type="radio" name="rating" value="4" onchange="applyFilters()" class="text-cyan-600 focus:ring-cyan-500"> ⭐⭐⭐⭐ & above
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer hover:text-cyan-600">
+                            <input type="radio" name="rating" value="3" onchange="applyFilters()" class="text-cyan-600 focus:ring-cyan-500"> ⭐⭐⭐ & above
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer hover:text-cyan-600">
+                            <input type="radio" name="rating" value="0" checked onchange="applyFilters()" class="text-cyan-600 focus:ring-cyan-500"> All Ratings
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Promo Banner in Sidebar -->
+                <div class="bg-gradient-to-br from-amber-400 to-pink-500 p-4 rounded-2xl text-white text-center space-y-2 shadow">
+                    <i data-lucide="gift" class="w-8 h-8 mx-auto"></i>
+                    <h5 class="font-bold">bKash & Nagad Accepted!</h5>
+                    <p class="text-xs">Pay securely online with instant transaction verification.</p>
+                </div>
+            </aside>
+
+            <!-- Product Grid Area -->
+            <div class="flex-1 space-y-6">
+                <!-- Sorting Bar -->
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <p class="text-sm text-gray-600 font-medium">Showing <span id="product-count" class="font-bold text-gray-900">0</span> magical toys</p>
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <label class="text-sm text-gray-600 whitespace-nowrap">Sort by:</label>
+                        <select id="sort-select" onchange="applyFilters()" class="bg-gray-50 border border-gray-300 text-sm rounded-xl px-3 py-2 outline-none font-medium text-gray-700 w-full sm:w-auto cursor-pointer">
+                            <option value="featured">Featured / Popular</option>
+                            <option value="low-high">Price: Low to High</option>
+                            <option value="high-low">Price: High to Low</option>
+                            <option value="rating">Top Rated</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Products Container -->
+                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Dynamic Product Cards injected via JavaScript -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="hidden text-center py-16 bg-white rounded-3xl border border-gray-200 p-8 space-y-4">
+                    <i data-lucide="package-search" class="w-16 h-16 mx-auto text-gray-400"></i>
+                    <h3 class="heading-font text-xl font-bold text-gray-800">No toys found!</h3>
+                    <p class="text-gray-500 text-sm max-w-sm mx-auto">We couldn't find any toys matching your filters. Try resetting filters or searching something else.</p>
+                    <button onclick="resetFilters()" class="bg-cyan-600 text-white font-bold px-6 py-2.5 rounded-full shadow hover:bg-cyan-700 transition">Reset Filters</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="product-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative border border-gray-100 animate-in fade-in zoom-in duration-200">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-700 p-2.5 rounded-full transition z-10">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div id="modal-content" class="p-6 sm:p-8">
+                <!-- Injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex justify-end">
+        <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col transform transition-transform duration-300">
+            <!-- Cart Header -->
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between bg-cyan-50">
+                <h3 class="heading-font text-xl font-bold text-gray-900 flex items-center gap-2">
+                    <i data-lucide="shopping-cart" class="w-6 h-6 text-cyan-600"></i> Your Shopping Cart
+                </h3>
+                <button onclick="closeCartDrawer()" class="p-2 text-gray-500 hover:text-gray-800 rounded-full">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items List -->
+            <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <!-- Injected dynamically -->
+            </div>
+
+            <!-- Cart Footer -->
+            <div class="p-6 border-t border-gray-200 bg-gray-50 space-y-4">
+                <!-- Coupon Box -->
+                <div class="flex gap-2">
+                    <input type="text" id="coupon-input" placeholder="Promo code (e.g., WAVEKIDS)" class="flex-1 border border-gray-300 rounded-xl px-3 py-2 text-sm outline-none">
+                    <button onclick="applyCoupon()" class="bg-gray-800 hover:bg-gray-900 text-white font-medium text-sm px-4 py-2 rounded-xl transition">Apply</button>
+                </div>
+                <div id="coupon-message" class="text-xs font-semibold text-emerald-600 hidden"></div>
+
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between text-gray-600">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal" class="font-bold text-gray-900">৳0</span>
+                    </div>
+                    <div class="flex justify-between text-gray-600">
+                        <span>Discount</span>
+                        <span id="cart-discount" class="font-bold text-emerald-600">-৳0</span>
+                    </div>
+                    <div class="flex justify-between text-base font-bold border-t pt-2 text-gray-900">
+                        <span>Total</span>
+                        <span id="cart-total" class="text-cyan-700 text-lg">৳0</span>
+                    </div>
+                </div>
+
+                <button onclick="openCheckoutModal()" id="checkout-btn" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3.5 rounded-2xl shadow-lg transition flex items-center justify-center gap-2">
+                    <i data-lucide="lock" class="w-5 h-5"></i> Proceed to Secure Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="wishlist-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full max-h-[80vh] overflow-y-auto shadow-2xl p-6 relative">
+            <div class="flex items-center justify-between border-b pb-4">
+                <h3 class="heading-font text-xl font-bold text-gray-900 flex items-center gap-2">
+                    <i data-lucide="heart" class="w-6 h-6 text-cyan-600 fill-cyan-600"></i> My Favorite Toys
+                </h3>
+                <button onclick="closeWishlistModal()" class="p-2 text-gray-500 hover:text-gray-800 rounded-full">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="wishlist-items-container" class="py-4 space-y-4">
+                <!-- Injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative space-y-5 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b pb-4">
+                <h3 class="heading-font text-xl font-bold text-gray-900 flex items-center gap-2">
+                    <i data-lucide="credit-card" class="w-6 h-6 text-cyan-600"></i> Secure Checkout (Bangladesh)
+                </h3>
+                <button onclick="closeCheckoutModal()" class="p-2 text-gray-500 hover:text-gray-800 rounded-full">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="checkout-form" onsubmit="handleCheckoutSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Full Name (Parent / Guardian)</label>
+                    <input type="text" required placeholder="e.g., Tanvir Ahmed" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-cyan-600">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Phone Number (bKash/Nagad)</label>
+                        <input type="tel" required placeholder="01700000000" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-cyan-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">District / City</label>
+                        <select required class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-cyan-600 bg-white">
+                            <option value="">Select District</option>
+                            <option value="Dhaka">Dhaka</option>
+                            <option value="Chattogram">Chattogram</option>
+                            <option value="Khulna">Khulna</option>
+                            <option value="Rajshahi">Rajshahi</option>
+                            <option value="Sylhet">Sylhet</option>
+                            <option value="Barishal">Barishal</option>
+                            <option value="Rangpur">Rangpur</option>
+                            <option value="Mymensingh">Mymensingh</option>
+                            <option value="Jashore">Jashore</option>
+                            <option value="Comilla">Comilla</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Detailed Delivery Address</label>
+                    <input type="text" required placeholder="House 12, Road 4, Block C, Uttara" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-cyan-600">
+                </div>
+
+                <!-- Payment Method Selection -->
+                <div class="space-y-2 pt-2">
+                    <label class="block text-xs font-bold uppercase text-gray-600">Select Mobile Payment Gateway</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="border-2 border-gray-200 rounded-2xl p-3 flex items-center gap-3 cursor-pointer hover:border-bkash transition has-[:checked]:border-bkash has-[:checked]:bg-pink-50">
+                            <input type="radio" name="payment_method" value="bkash" required checked class="text-bkash focus:ring-bkash" onchange="togglePaymentInstructions('bkash')">
+                            <div>
+                                <span class="block font-bold text-sm text-bkash">bKash</span>
+                                <span class="text-[10px] text-gray-500">Merchant Pay / Send Money</span>
+                            </div>
+                        </label>
+                        <label class="border-2 border-gray-200 rounded-2xl p-3 flex items-center gap-3 cursor-pointer hover:border-nagad transition has-[:checked]:border-nagad has-[:checked]:bg-orange-50">
+                            <input type="radio" name="payment_method" value="nagad" required class="text-nagad focus:ring-nagad" onchange="togglePaymentInstructions('nagad')">
+                            <div>
+                                <span class="block font-bold text-sm text-nagad">Nagad</span>
+                                <span class="text-[10px] text-gray-500">Send Money / Checkout</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Payment Instruction Box -->
+                <div id="payment-instructions" class="bg-pink-50 border border-pink-200 p-3.5 rounded-2xl text-xs space-y-1.5 text-gray-700">
+                    <p class="font-bold text-bkash" id="gateway-title">bKash Payment Instructions:</p>
+                    <p>1. Send Money/Payment to our Merchant Wallet: <span class="font-bold">01800-000000</span></p>
+                    <p>2. Enter your bKash Mobile Number and Transaction ID (TrxID) below once payment is completed.</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Sender Mobile No.</label>
+                        <input type="tel" required placeholder="018XXXXXXXX" class="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm outline-none focus:border-cyan-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Transaction ID (TrxID)</label>
+                        <input type="text" required placeholder="9N8K7M6L" class="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm outline-none font-mono uppercase focus:border-cyan-600">
+                    </div>
+                </div>
+
+                <div class="bg-cyan-50 p-4 rounded-2xl flex items-center justify-between text-sm font-bold text-gray-800">
+                    <span>Total Amount to Pay:</span>
+                    <span id="checkout-modal-total" class="text-cyan-700 text-lg">৳0</span>
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-2xl shadow-lg transition flex items-center justify-center gap-2">
+                    <i data-lucide="check-circle" class="w-5 h-5"></i> Verify & Confirm Order 🇧🇩
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="success-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 text-center space-y-6 shadow-2xl">
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner animate-bounce">
+                <i data-lucide="party-popper" class="w-10 h-10"></i>
+            </div>
+            <div class="space-y-2">
+                <h3 class="heading-font text-2xl font-extrabold text-gray-900">Order Placed Successfully!</h3>
+                <p class="text-sm text-gray-600">Your bKash/Nagad payment is verified. Your toys are packed for express delivery! Order ID: <span id="order-number" class="font-bold text-gray-950 font-mono"></span></p>
+            </div>
+            <button onclick="closeSuccessModal()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 rounded-2xl shadow transition">
+                Continue Shopping 🧸
+            </button>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-gray-900 text-white px-6 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-sm font-medium">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i>
+        <span id="toast-message">Item added to cart!</span>
+    </div>
+
+    <footer class="bg-gray-900 text-white mt-16 pt-12 pb-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <div class="bg-cyan-500 text-white p-2 rounded-xl">
+                            <i data-lucide="waves" class="w-6 h-6"></i>
+                        </div>
+                        <span class="heading-font text-2xl font-extrabold tracking-tight">KidsWave</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Bangladesh's most delightful kids toy destination — bringing joy, education, and safe playtime magic to homes everywhere.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-base mb-4 text-amber-400">Toy Categories</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" onclick="filterByCategory('Action Figures'); return false;" class="hover:text-white transition">Action Figures & Superheroes</a></li>
+                        <li><a href="#" onclick="filterByCategory('Educational'); return false;" class="hover:text-white transition">Educational STEM Toys</a></li>
+                        <li><a href="#" onclick="filterByCategory('Board Games'); return false;" class="hover:text-white transition">Family Board Games</a></li>
+                        <li><a href="#" onclick="filterByCategory('Dolls'); return false;" class="hover:text-white transition">Dolls & Plushies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-base mb-4 text-amber-400">Customer Care & Delivery</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Express Delivery Across Bangladesh</a></li>
+                        <li><a href="#" class="hover:text-white transition">bKash & Nagad Secure Payment</a></li>
+                        <li><a href="#" class="hover:text-white transition">Easy Returns & Quality Guarantee</a></li>
+                        <li><a href="#" class="hover:text-white transition">Customer Support Hotline</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="font-bold text-base mb-4 text-amber-400">Join KidsWave Club</h4>
+                    <p class="text-xs text-gray-400">Subscribe to get secret discount codes and weekly toy discovery lists!</p>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="parent@email.com" class="bg-gray-800 text-sm px-4 py-2 rounded-xl text-white outline-none w-full border border-gray-700">
+                        <button onclick="showToast('Subscribed successfully! Check your inbox for ৳200 voucher 🎉')" class="bg-cyan-500 hover:bg-cyan-600 px-4 py-2 rounded-xl font-bold text-sm transition">Join</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-xs text-gray-500">
+                &copy; 2026 KidsWave Inc. All rights reserved. Proudly serving children across Bangladesh with bKash & Nagad integration.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Comprehensive Toy Dataset with BDT Prices
+        const products = [
+            {
+                id: 1,
+                name: "Super Galactic Space Rocket & Astronauts",
+                category: "Action Figures",
+                age: "6-8 yrs",
+                price: 3499,
+                rating: 4.8,
+                reviewsCount: 142,
+                image: "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=500&q=80",
+                badge: "Best Seller",
+                description: "Launch into imagination with this fully equipped space station featuring glowing thrusters, docking bays, and 3 astronaut figurines.",
+                features: ["Interactive lights & sounds", "Durable child-safe ABS plastic", "Includes 3 poseable astronaut figures", "Batteries included"]
+            },
+            {
+                id: 2,
+                name: "Wooden Montessori STEM Counting Tree",
+                category: "Educational",
+                age: "3-5 yrs",
+                price: 2450,
+                rating: 4.9,
+                reviewsCount: 98,
+                image: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=500&q=80",
+                badge: "Top Rated",
+                description: "Help toddlers learn numbers, colors, and counting fundamentals with sustainably harvested wooden apple blocks.",
+                features: ["100% natural eco-friendly wood", "Non-toxic water-based colorful paint", "Develops fine motor skills", "Montessori approved method"]
+            },
+            {
+                id: 3,
+                name: "Kingdom Quest Family Board Game",
+                category: "Board Games",
+                age: "9+ yrs",
+                price: 1999,
+                rating: 4.7,
+                reviewsCount: 215,
+                image: "https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?auto=format&fit=crop&w=500&q=80",
+                badge: "Award Winner",
+                description: "An exciting strategy and adventure board game for the whole family. Defeat dragons, collect treasures, and claim the kingdom!",
+                features: ["2 to 5 players", "Approx. 45 mins per game", "Stunning illustrated game board", "High quality miniature tokens"]
+            },
+            {
+                id: 4,
+                name: "CuddlePuff Magical Unicorn Plush Toy",
+                category: "Dolls",
+                age: "0-2 yrs",
+                price: 1599,
+                rating: 5.0,
+                reviewsCount: 310,
+                image: "https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=500&q=80",
+                badge: "Super Soft",
+                description: "The softest, most huggable unicorn companion with a shimmering golden horn and rainbow mane.",
+                features: ["Hypoallergenic plush fabric", "Machine washable on gentle cycle", "Perfect bedtime cuddling buddy", "Safe for newborns"]
+            },
+            {
+                id: 5,
+                name: "Eco-Friendly Outdoor Adventure Kit",
+                category: "Outdoor",
+                age: "6-8 yrs",
+                price: 2899,
+                rating: 4.6,
+                reviewsCount: 76,
+                image: "https://images.unsplash.com/photo-1533228876829-65c94e7b5025?auto=format&fit=crop&w=500&q=80",
+                badge: "New",
+                description: "Inspire outdoor curiosity with binoculars, magnifying glass, bug catcher, compass, and safari hat.",
+                features: ["Rugged shockproof binoculars", "Safe bug observation container", "Adjustable safari vest & hat", "Encourages outdoor exploration"]
+            },
+            {
+                id: 6,
+                name: "Musical Baby Activity Cube & Xylophone",
+                category: "Baby Toys",
+                age: "0-2 yrs",
+                price: 2150,
+                rating: 4.8,
+                reviewsCount: 184,
+                image: "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=500&q=80",
+                badge: "Parent Favorite",
+                description: "Five sides of interactive play! Features shape sorting, bead mazes, turning gears, and a built-in metal xylophone.",
+                features: ["Smooth rounded edges for safety", "Multiple developmental activities", "Bright engaging primary colors", "Compact storage design"]
+            },
+            {
+                id: 7,
+                name: "Ninja Warrior Action Hero Set (4-Pack)",
+                category: "Action Figures",
+                age: "6-8 yrs",
+                price: 3200,
+                rating: 4.5,
+                reviewsCount: 62,
+                image: "https://images.unsplash.com/photo-1581557991964-125469da3b8a?auto=format&fit=crop&w=500&q=80",
+                badge: "Popular",
+                description: "Four articulated ninja action heroes equipped with removable martial arts weapons and dynamic stances.",
+                features: ["Poseable joints for action stunts", "Interchangeable weapons included", "Sturdy construction", "Collectible character cards"]
+            },
+            {
+                id: 8,
+                name: "Robotics Coding Rover for Kids",
+                category: "Educational",
+                age: "9+ yrs",
+                price: 6500,
+                rating: 4.9,
+                reviewsCount: 129,
+                image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=500&q=80",
+                badge: "STEM Star",
+                description: "Introduce kids to computer programming and robotics through puzzle cards and app-guided obstacle navigation.",
+                features: ["Screen-free and app-controlled modes", "Teaches logic and basic coding", "Rechargeable USB battery", "Obstacle detection sensors"]
+            },
+            {
+                id: 9,
+                name: "Princess Royal Palace Dollhouse",
+                category: "Dolls",
+                age: "3-5 yrs",
+                price: 7499,
+                rating: 4.8,
+                reviewsCount: 155,
+                image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=500&q=80",
+                badge: "Dream Toy",
+                description: "A 3-story dollhouse complete with miniature furniture, balcony, and spiral staircase for hours of creative storytelling.",
+                features: ["Hand-painted wooden furniture", "Open-back design for easy play", "Fits standard fashion dolls", "Easy assembly instructions"]
+            }
+        ];
+
+        let cart = [];
+        let wishlist = [];
+        let activeCategory = 'All';
+        let discountRate = 0;
+        let appliedCouponCode = '';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts(products);
+            lucide.createIcons();
+            
+            document.getElementById('search-input').addEventListener('input', () => { applyFilters(); });
+            document.getElementById('mobile-search-input').addEventListener('input', (e) => {
+                document.getElementById('search-input').value = e.target.value;
+                applyFilters();
+            });
+            document.getElementById('category-filter-select').addEventListener('change', (e) => {
+                activeCategory = e.target.value;
+                updateCategoryButtonsUI();
+                applyFilters();
+            });
+        });
+
+        function filterByCategory(category) {
+            activeCategory = category;
+            document.getElementById('category-filter-select').value = category;
+            updateCategoryButtonsUI();
+            applyFilters();
+        }
+
+        function updateCategoryButtonsUI() {
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                if(btn.textContent.includes(activeCategory) || (activeCategory === 'All' && btn.textContent.includes('All Toys'))) {
+                    btn.className = "category-btn whitespace-nowrap px-4 py-2 rounded-full bg-cyan-600 text-white shadow-md transition flex items-center gap-2";
+                } else {
+                    btn.className = "category-btn whitespace-nowrap px-4 py-2 rounded-full bg-gray-100 hover:bg-cyan-100 text-gray-700 transition flex items-center gap-2";
+                }
+            });
+        }
+
+        function resetFilters() {
+            activeCategory = 'All';
+            document.getElementById('category-filter-select').value = 'All';
+            document.getElementById('search-input').value = '';
+            document.getElementById('mobile-search-input').value = '';
+            document.getElementById('price-range').value = 10000;
+            document.getElementById('price-output').textContent = '৳10,000';
+            document.querySelectorAll('input[name="age"]').forEach(cb => cb.checked = false);
+            document.querySelector('input[name="rating"][value="0"]').checked = true;
+            document.getElementById('sort-select').value = 'featured';
+            updateCategoryButtonsUI();
+            renderProducts(products);
+        }
+
+        function updatePriceLabel() {
+            const val = document.getElementById('price-range').value;
+            document.getElementById('price-output').textContent = '৳' + Number(val).toLocaleString();
+        }
+
+        function applyFilters() {
+            const searchQuery = document.getElementById('search-input').value.toLowerCase();
+            const maxPrice = parseFloat(document.getElementById('price-range').value);
+            const checkedAges = Array.from(document.querySelectorAll('input[name="age"]:checked')).map(cb => cb.value);
+            const minRating = parseFloat(document.querySelector('input[name="rating"]:checked').value);
+            const sortBy = document.getElementById('sort-select').value;
+
+            let filtered = products.filter(item => {
+                if (activeCategory !== 'All' && item.category !== activeCategory) return false;
+                if (searchQuery && !item.name.toLowerCase().includes(searchQuery) && !item.description.toLowerCase().includes(searchQuery)) return false;
+                if (item.price > maxPrice) return false;
+                if (checkedAges.length > 0 && !checkedAges.includes(item.age)) return false;
+                if (item.rating < minRating) return false;
+                return true;
+            });
+
+            if (sortBy === 'low-high') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortBy === 'high-low') {
+                filtered.sort((a, b) => b.price - a.price);
+            } else if (sortBy === 'rating') {
+                filtered.sort((a, b) => b.rating - a.rating);
+            }
+
+            renderProducts(filtered);
+        }
+
+        function renderProducts(items) {
+            const grid = document.getElementById('product-grid');
+            const emptyState = document.getElementById('empty-state');
+            document.getElementById('product-count').textContent = items.length;
+
+            if (items.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = items.map(product => {
+                const isWishlisted = wishlist.some(w => w.id === product.id);
+                return `
+                    <div class="bg-white rounded-3xl p-5 border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden bg-gray-100 aspect-4/3 mb-4 cursor-pointer" onclick="openProductModal(${product.id})">
+                                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=500&q=80'">
+                                <span class="absolute top-3 left-3 bg-cyan-600 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow">${product.badge}</span>
+                                <button onclick="event.stopPropagation(); toggleWishlist(${product.id})" class="absolute top-3 right-3 bg-white/90 hover:bg-white p-2 rounded-full shadow text-cyan-600 transition">
+                                    <i data-lucide="heart" class="w-5 h-5 ${isWishlisted ? 'fill-cyan-600' : ''}"></i>
+                                </button>
+                                <span class="absolute bottom-3 right-3 bg-black/60 backdrop-blur text-white text-xs px-2 py-0.5 rounded-md font-medium">${product.age}</span>
+                            </div>
+
+                            <span class="text-xs font-bold text-cyan-600 uppercase tracking-wider">${product.category}</span>
+                            <h3 onclick="openProductModal(${product.id})" class="heading-font font-bold text-gray-900 text-base mt-1 line-clamp-1 cursor-pointer hover:text-cyan-700 transition">${product.name}</h3>
+
+                            <div class="flex items-center gap-1.5 mt-2 text-sm">
+                                <div class="flex text-amber-400">
+                                    <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                                </div>
+                                <span class="font-bold text-gray-800">${product.rating}</span>
+                                <span class="text-gray-400 text-xs">(${product.reviewsCount})</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex items-center justify-between pt-4 border-t border-gray-100">
+                            <div>
+                                <span class="text-xs text-gray-400 block">Price</span>
+                                <span class="text-xl font-extrabold text-gray-900">৳${product.price.toLocaleString()}</span>
+                            </div>
+                            <button onclick="addToCart(${product.id})" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold px-4 py-2.5 rounded-xl shadow transition flex items-center gap-2 text-sm transform active:scale-95">
+                                <i data-lucide="shopping-bag" class="w-4 h-4"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function openProductModal(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            const modalContent = document.getElementById('modal-content');
+            modalContent.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="rounded-2xl overflow-hidden bg-gray-100 aspect-square shadow-inner">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="space-y-4">
+                        <span class="bg-cyan-100 text-cyan-800 font-bold text-xs px-3 py-1 rounded-full">${product.category} • Age ${product.age}</span>
+                        <h2 class="heading-font text-2xl sm:text-3xl font-extrabold text-gray-900">${product.name}</h2>
+                        
+                        <div class="flex items-center gap-2">
+                            <div class="flex text-amber-400">
+                                <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+                            </div>
+                            <span class="font-bold text-gray-900 text-base">${product.rating}</span>
+                            <span class="text-gray-500 text-sm">(${product.reviewsCount} verified parent reviews)</span>
+                        </div>
+
+                        <p class="text-gray-600 text-sm leading-relaxed">${product.description}</p>
+
+                        <div class="space-y-2">
+                            <h4 class="font-bold text-sm text-gray-900">Key Features:</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                ${product.features.map(f => `<li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> ${f}</li>`).join('')}
+                            </ul>
+                        </div>
+
+                        <div class="pt-4 border-t flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-gray-400 block">Total Price</span>
+                                <span class="text-3xl font-extrabold text-cyan-700">৳${product.price.toLocaleString()}</span>
+                            </div>
+                            <button onclick="addToCart(${product.id}); closeProductModal();" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg transition flex items-center gap-2">
+                                <i data-lucide="shopping-cart" class="w-5 h-5"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('product-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+        }
+
+        function openCartDrawer() {
+            document.getElementById('cart-drawer').classList.remove('hidden');
+            renderCartItems();
+        }
+
+        function closeCartDrawer() {
+            document.getElementById('cart-drawer').classList.add('hidden');
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            updateCartBadge();
+            showToast(`Added "${product.name}" to cart! 🧸`);
+        }
+
+        function updateCartQuantity(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.id !== id);
+            }
+            updateCartBadge();
+            renderCartItems();
+        }
+
+        function updateCartBadge() {
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-badge').textContent = totalCount;
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cart-items-container');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16 space-y-3">
+                        <i data-lucide="shopping-bag" class="w-16 h-16 mx-auto text-gray-300"></i>
+                        <h4 class="font-bold text-gray-800 text-lg">Your cart is empty</h4>
+                        <p class="text-gray-500 text-sm">Add some fun toys to start your order!</p>
+                    </div>
+                `;
+                document.getElementById('cart-subtotal').textContent = '৳0';
+                document.getElementById('cart-discount').textContent = '-৳0';
+                document.getElementById('cart-total').textContent = '৳0';
+                lucide.createIcons();
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="flex items-center gap-4 bg-gray-50 p-3 rounded-2xl border border-gray-100">
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-xl bg-white">
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-bold text-sm text-gray-900 truncate">${item.name}</h4>
+                        <span class="text-cyan-700 font-extrabold text-sm">৳${item.price.toLocaleString()}</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white border border-gray-200 rounded-xl p-1 shadow-sm">
+                        <button onclick="updateCartQuantity(${item.id}, -1)" class="w-7 h-7 flex items-center justify-center font-bold text-gray-600 hover:bg-gray-100 rounded-lg">-</button>
+                        <span class="text-sm font-bold w-5 text-center">${item.quantity}</span>
+                        <button onclick="updateCartQuantity(${item.id}, 1)" class="w-7 h-7 flex items-center justify-center font-bold text-gray-600 hover:bg-gray-100 rounded-lg">+</button>
+                    </div>
+                </div>
+            `).join('');
+
+            calculateTotals();
+            lucide.createIcons();
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById('coupon-input').value.trim().toUpperCase();
+            const msg = document.getElementById('coupon-message');
+            if (code === 'WAVEKIDS') {
+                discountRate = 0.15;
+                appliedCouponCode = code;
+                msg.textContent = '🎉 Coupon applied successfully! 15% OFF';
+                msg.classList.remove('hidden');
+            } else {
+                discountRate = 0;
+                msg.textContent = '❌ Invalid coupon code. Try WAVEKIDS';
+                msg.classList.remove('hidden', 'text-emerald-600');
+                msg.classList.add('text-rose-600');
+            }
+            calculateTotals();
+        }
+
+        function calculateTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const discount = subtotal * discountRate;
+            const total = subtotal - discount;
+
+            document.getElementById('cart-subtotal').textContent = '৳' + subtotal.toLocaleString();
+            document.getElementById('cart-discount').textContent = '-৳' + discount.toLocaleString();
+            document.getElementById('cart-total').textContent = '৳' + total.toLocaleString();
+        }
+
+        function toggleWishlist(id) {
+            const product = products.find(p => p.id === id);
+            const index = wishlist.findIndex(w => w.id === id);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showToast(`Removed from wishlist`);
+            } else {
+                wishlist.push(product);
+                showToast(`Added to your wishlist ❤️`);
+            }
+            document.getElementById('wishlist-badge').textContent = wishlist.length;
+            applyFilters();
+        }
+
+        function openWishlistModal() {
+            const container = document.getElementById('wishlist-items-container');
+            if (wishlist.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 space-y-3">
+                        <i data-lucide="heart" class="w-16 h-16 mx-auto text-gray-300"></i>
+                        <h4 class="font-bold text-gray-800 text-lg">Your wishlist is empty</h4>
+                        <p class="text-gray-500 text-sm">Click the heart icon on any toy to save it for later!</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = wishlist.map(item => `
+                    <div class="flex items-center gap-4 bg-gray-50 p-3 rounded-2xl border border-gray-100">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-xl">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-sm text-gray-900 truncate">${item.name}</h4>
+                            <span class="text-cyan-700 font-extrabold text-sm">৳${item.price.toLocaleString()}</span>
+                        </div>
+                        <button onclick="addToCart(${item.id}); toggleWishlist(${item.id}); openCartDrawer(); closeWishlistModal();" class="bg-cyan-600 text-white font-bold text-xs px-3 py-2 rounded-xl shadow hover:bg-cyan-700">
+                            Move to Cart
+                        </button>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('wishlist-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeWishlistModal() {
+            document.getElementById('wishlist-modal').classList.add('hidden');
+        }
+
+        function togglePaymentInstructions(gateway) {
+            const box = document.getElementById('payment-instructions');
+            const title = document.getElementById('gateway-title');
+            if (gateway === 'bkash') {
+                box.className = "bg-pink-50 border border-pink-200 p-3.5 rounded-2xl text-xs space-y-1.5 text-gray-700";
+                title.className = "font-bold text-bkash";
+                title.textContent = "bKash Payment Instructions:";
+                box.innerHTML = `
+                    <p class="font-bold text-bkash" id="gateway-title">bKash Payment Instructions:</p>
+                    <p>1. Send Money/Payment to our bKash Merchant Wallet: <span class="font-bold">01800-000000</span></p>
+                    <p>2. Enter your bKash Mobile Number and Transaction ID (TrxID) below.</p>
+                `;
+            } else {
+                box.className = "bg-orange-50 border border-orange-200 p-3.5 rounded-2xl text-xs space-y-1.5 text-gray-700";
+                title.className = "font-bold text-nagad";
+                title.textContent = "Nagad Payment Instructions:";
+                box.innerHTML = `
+                    <p class="font-bold text-nagad" id="gateway-title">Nagad Payment Instructions:</p>
+                    <p>1. Send Money/Payment to our Nagad Merchant Wallet: <span class="font-bold">01700-000000</span></p>
+                    <p>2. Enter your Nagad Mobile Number and Transaction ID (TrxID) below.</p>
+                `;
+            }
+        }
+
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                showToast('Your cart is empty!');
+                return;
+            }
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const discount = subtotal * discountRate;
+            const total = subtotal - discount;
+            document.getElementById('checkout-modal-total').textContent = '৳' + total.toLocaleString();
+            closeCartDrawer();
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function handleCheckoutSubmit(e) {
+            e.preventDefault();
+            closeCheckoutModal();
+            cart = [];
+            updateCartBadge();
+            document.getElementById('order-number').textContent = 'KW-' + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('success-modal').classList.remove('hidden');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function handleSearch() { applyFilters(); }
+        function handleMobileSearch() { applyFilters(); }
+    </script>
+</body>
+</html>
